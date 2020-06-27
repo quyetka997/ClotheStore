@@ -1,7 +1,10 @@
 package com.nnstore.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -21,6 +24,11 @@ public class Order {
 
     @Column(name = "Amount")
     private Double amount;
+
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/mm/yyyy")
+    @Column(name = "CreateDate")
+    private Date createdDate;
 
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails = new ArrayList<>();
@@ -55,6 +63,14 @@ public class Order {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public List<OrderDetail> getOrderDetails() {

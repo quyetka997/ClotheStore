@@ -1,5 +1,7 @@
 package com.nnstore.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,7 +31,9 @@ public class Product {
     @Column(name = "Sale")
     private Integer sale;
 
-    @Column(name = "CreatedDate")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/mm/yyyy")
+    @Column(name = "CreateDate")
     private Date CreatedDate;
 
     @Column(name = "Thumnail")
