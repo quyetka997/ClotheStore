@@ -61,9 +61,9 @@ public class JPAConfig {
 
     Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+        //properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
         //properties.setProperty("hibernate.hbm2ddl.auto", "none");
-        //properties.setProperty("hibernate.hbm2ddl.auto", evn.getProperty("hb.ddl.auto"));
+        properties.setProperty("hibernate.hbm2ddl.auto", evn.getProperty("hb.ddl.auto"));
         properties.setProperty("hibernate.enable_lazy_load_no_trans", evn.getProperty("hb.load-lazy"));
         properties.setProperty("hibernate.dialect", evn.getProperty("hb.dialect"));
         properties.setProperty("spring.jpa.show-sql", evn.getProperty("hb.show-sql"));

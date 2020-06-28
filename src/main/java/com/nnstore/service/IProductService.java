@@ -1,23 +1,23 @@
 package com.nnstore.service;
 
-import com.nnstore.entity.Product;
+import com.nnstore.dto.ProductDTO;
 
 import java.util.List;
 
 public interface IProductService {
-    List<Product> findAll();
+    List<ProductDTO> findAll();
 
-    Product findOneById(Long id);
+    ProductDTO findOneById(Long id);
 
-    Product save(Product product);
+    ProductDTO save(ProductDTO product);
 
     void delete(Long id);
 
-    int getFavoriteCount(Long id);
+    Long getFavoriteCount(Long id);
 
-    int getViewCount(Long id);
+    Long getViewCount(Long id);
 
-    int getRemindCount(Long id);
+    Long getRemindCount(Long id);
 
-    Long getCoutn();
+    Long getCount();
 }

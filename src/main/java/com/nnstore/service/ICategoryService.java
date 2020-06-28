@@ -1,5 +1,6 @@
 package com.nnstore.service;
 
+import com.nnstore.dto.ProductDTO;
 import com.nnstore.entity.Category;
 import com.nnstore.entity.Product;
 
@@ -9,7 +10,9 @@ public interface ICategoryService {
 
     List<Category> findAll();
 
-    List<Product> findProductByCategoryId(Long id);
+    Category findOne(Long id);
+
+    List<ProductDTO> findProductByCategoryId(Long id);
 
     int getCountProduct(Long id);
 }

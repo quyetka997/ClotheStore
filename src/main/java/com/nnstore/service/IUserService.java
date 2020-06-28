@@ -1,16 +1,21 @@
 package com.nnstore.service;
 
+import com.nnstore.dto.UserDTO;
 import com.nnstore.entity.User;
 
 import java.util.List;
 
 public interface IUserService {
 
-    List<User> findAll();
+    List<UserDTO> findAll();
 
-    User findOneByUserNameAndPassWord(String username, String password);
+    UserDTO findOneById(Long id);
 
-    User save(User user);
+    UserDTO findOneByUserNameAndPassWord(String username, String password);
+
+    UserDTO findOneByUserName(String username);
+
+    UserDTO save(UserDTO user);
 
     void delete(Long id);
 }
