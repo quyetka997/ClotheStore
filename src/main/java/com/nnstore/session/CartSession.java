@@ -8,10 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SessionScope //Name cartSession
 @Component
@@ -35,8 +32,9 @@ public class CartSession {
         map.remove(id);
     }
 
-    public void update(Long id, ProductDTO productDTO) {
-        map.put(id,productDTO);
+    public void update(Long id, Integer quantity) {
+        ProductDTO productDTO = map.get(id);
+        productDTO.setQuantity(quantity);
     }
 
     public void clear() {
@@ -63,5 +61,14 @@ public class CartSession {
 
     public Collection<ProductDTO> getItems() {
         return map.values();
+    }
+
+    public List<ProductDTO> getProducts() {
+        Collection<ProductDTO> productDTOs = this.getItems();
+        List<ProductDTO> list = new ArrayList<>();
+        for (ProductDTO productDTO: productDTOs) {
+            list.add(productDTO);
+        }
+        return list;
     }
 }

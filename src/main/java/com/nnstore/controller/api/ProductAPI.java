@@ -14,12 +14,14 @@ public class ProductAPI {
     @Autowired
     IProductService productService;
 
-    @Autowired
-    ICategoryService categoryService;
-
     @GetMapping("/product")
     ResponseEntity<?> getAllProduct() {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.findAll());
+    }
+
+    @GetMapping("/product")
+    ResponseEntity<?> getAllProductFollowCategory(@RequestParam Long categoryId, @RequestParam(required = false) String name) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.findAllByCategoryIdAndNameLike(categoryId, name));
     }
 
     @GetMapping("/product/{id}")
@@ -30,6 +32,11 @@ public class ProductAPI {
     @PostMapping("/product")
     ResponseEntity<?> saveProduct(@RequestBody ProductDTO productDTO) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.save(productDTO));
+    }
+
+    @GetMapping(value = {"/product/search"})
+    public ResponseEntity<?> search(@RequestParam(name = "keyword", required = false,defaultValue = "") String name){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.findAllByNameLike(name));
     }
 
 //    @GetMapping("/product/view/{id}")

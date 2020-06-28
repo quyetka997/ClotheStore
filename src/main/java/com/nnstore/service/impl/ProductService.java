@@ -26,7 +26,7 @@ public class ProductService implements IProductService {
 
         List<Product> products = new ArrayList<>();
 
-        for (Product product: products) {
+        for (Product product : products) {
             productDTOs.add(productConverter.toDTO(product));
         }
         return productDTOs;
@@ -43,6 +43,48 @@ public class ProductService implements IProductService {
 
         Product result = productConverter.toEntity(productDTO, product);
         return productConverter.toDTO(productRepository.save(result));
+    }
+
+    @Override
+    public List<ProductDTO> findAllByNameLike(String like) {
+        List<Product> products = productRepository.findAllByNameLike("%" + like + "%");
+        List<ProductDTO> productDTOs = new ArrayList<>();
+        if (products != null) {
+            for (Product product : products) {
+                productDTOs.add(productConverter.toDTO(product));
+            }
+        }
+        return productDTOs;
+    }
+
+    @Override
+    public List<ProductDTO> findAllByCategoryId(Long id) {
+        List<Product> products = productRepository.findAllByCategoryId(id);
+        List<ProductDTO> productDTOs = new ArrayList<>();
+        if (products != null) {
+            for (Product product : products) {
+                productDTOs.add(productConverter.toDTO(product));
+            }
+        }
+        return productDTOs;
+    }
+
+    @Override
+    public List<ProductDTO> findAllByCategoryIdAndNameLike(Long id, String name) {
+        List<Product> products;
+        if (name == null) {
+            products = productRepository.findAllByCategoryId(id);
+        } else {
+            products = productRepository.findAllByCategoryIdAndNameLike(id, name);
+            ;
+        }
+        List<ProductDTO> productDTOs = new ArrayList<>();
+        if (products != null) {
+            for (Product product : products) {
+                productDTOs.add(productConverter.toDTO(product));
+            }
+        }
+        return productDTOs;
     }
 
     @Override
