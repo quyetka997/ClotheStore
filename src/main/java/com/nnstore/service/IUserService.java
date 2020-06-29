@@ -11,11 +11,15 @@ public interface IUserService {
 
     UserDTO findOneById(Long id);
 
+    User findOne(Long id);
+
     UserDTO findOneByUserNameAndPassWord(String username, String password);
 
     UserDTO findOneByUserName(String username);
 
     UserDTO save(UserDTO user);
+
+    UserDTO update(UserDTO user);
 
     void delete(Long id);
 }

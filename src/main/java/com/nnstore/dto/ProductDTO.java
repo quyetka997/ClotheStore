@@ -1,5 +1,7 @@
 package com.nnstore.dto;
 
+import java.util.Date;
+
 public class ProductDTO {
 
     private Long id;
@@ -15,6 +17,8 @@ public class ProductDTO {
     private Long categoryId;
 
     private Integer quantity;
+
+    private Integer sale;
 
     public Long getId() {
         return id;
@@ -70,5 +74,13 @@ public class ProductDTO {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getSale() {
+        return sale;
+    }
+
+    public void setSale(Integer sale) {
+        this.sale = sale;
     }
 }

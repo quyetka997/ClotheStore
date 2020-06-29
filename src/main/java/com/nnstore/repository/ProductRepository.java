@@ -15,6 +15,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findAllByCategoryIdAndNameLike(Long id, String name);
 
+    //List<Product> findAllByOrderDetailId(Long id);
+
 //    @Query("SELECT COUNT(*) FROM user_product_favorite where productId = ?1 ")
 //    Long getFavoriteCount(Long id);
 //

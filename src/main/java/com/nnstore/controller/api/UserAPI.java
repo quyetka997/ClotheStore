@@ -23,12 +23,12 @@ public class UserAPI {
     @Autowired
     UserSession userSession;
 
-    @GetMapping(name = "/user")
+    @GetMapping("/user")
     ResponseEntity<?> getUsers() {
         return  ResponseEntity.ok(userService.findAll());
     }
 
-    @GetMapping(name = "/user/{id}")
+    @RequestMapping("/user/{id}")
     ResponseEntity<?> getUser(@PathVariable Long id) {
         UserDTO userDTO = userService.findOneById(id);
         if(userDTO != null) {
@@ -37,7 +37,7 @@ public class UserAPI {
         return  ResponseEntity.ok(userDTO);
     }
 
-    @PostMapping(name = "/user")
+    @PostMapping("/user")
     ResponseEntity<?> save(@RequestBody UserDTO userDTO) {
         if(userService.findOneByUserNameAndPassWord(userDTO.getUserName(), userDTO.getPassWord()) != null) {
             throw new DuplicateRecordException("Username already exists ");
@@ -47,8 +47,8 @@ public class UserAPI {
         return  ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
     }
 
-    @PutMapping(name = "/user")
-    ResponseEntity<?> update(UserDTO userDTO) {
+    @PutMapping("/user")
+    ResponseEntity<?> update(@RequestBody UserDTO userDTO) {
         if(userService.findOneByUserName(userDTO.getUserName()) == null) {
             throw new NotFoundException("User not exists ");
         }
@@ -57,7 +57,7 @@ public class UserAPI {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userDTO);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/user")
     ResponseEntity<?> delete(Long id) {
         userService.delete(id);
         userSession.removeUser();

@@ -24,7 +24,7 @@ public class ProductService implements IProductService {
     public List<ProductDTO> findAll() {
         List<ProductDTO> productDTOs = new ArrayList<>();
 
-        List<Product> products = new ArrayList<>();
+        List<Product> products = productRepository.findAll();
 
         for (Product product : products) {
             productDTOs.add(productConverter.toDTO(product));
@@ -35,6 +35,12 @@ public class ProductService implements IProductService {
     @Override
     public ProductDTO findOneById(Long id) {
         return productConverter.toDTO(productRepository.findOne(id));
+    }
+
+    @Override
+    public ProductDTO insert(ProductDTO productDTO) {
+        Product result = productConverter.toEntity(productDTO, new Product());
+        return productConverter.toDTO(productRepository.save(result));
     }
 
     @Override
@@ -70,13 +76,17 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public List<Product> findAllByOrderDetailId(Long id) {
+        return null;
+    }
+
+    @Override
     public List<ProductDTO> findAllByCategoryIdAndNameLike(Long id, String name) {
         List<Product> products;
         if (name == null) {
             products = productRepository.findAllByCategoryId(id);
         } else {
             products = productRepository.findAllByCategoryIdAndNameLike(id, name);
-            ;
         }
         List<ProductDTO> productDTOs = new ArrayList<>();
         if (products != null) {

@@ -1,6 +1,8 @@
 package com.nnstore.service.impl;
 
+import com.nnstore.converter.CategoryConverter;
 import com.nnstore.converter.ProductConverter;
+import com.nnstore.dto.CategoryDTO;
 import com.nnstore.dto.ProductDTO;
 import com.nnstore.entity.Category;
 import com.nnstore.entity.Product;
@@ -21,14 +23,45 @@ public class CategoryService implements ICategoryService {
     @Autowired
     ProductConverter productConverter;
 
+    @Autowired
+    CategoryConverter categoryConverter;
+
     @Override
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
+    public List<CategoryDTO> findAll() {
+        List<Category> categories = categoryRepository.findAll();
+        List<CategoryDTO> categoryDTOs = new ArrayList<>();
+        if (categories != null) {
+            for (Category category : categories) {
+                categoryDTOs.add(categoryConverter.toDTO(category));
+            }
+        }
+        return categoryDTOs;
     }
 
     @Override
-    public Category findOne(Long id) {
-        return categoryRepository.getOne(id);
+    public CategoryDTO findOne(Long id) {
+        Category category = categoryRepository.getOne(id);
+        if (category == null) {
+            return null;
+        }
+        return categoryConverter.toDTO(category);
+    }
+
+    @Override
+    public Category findCategory(Long id) {
+        return categoryRepository.findOne(id);
+    }
+
+    @Override
+    public CategoryDTO insert(CategoryDTO categoryDTO) {
+        Category category = categoryRepository.save(categoryConverter.toEntity(categoryDTO, new Category()));
+        return categoryConverter.toDTO(category);
+    }
+
+    @Override
+    public CategoryDTO update(CategoryDTO categoryDTO) {
+        Category category = categoryRepository.findOne(categoryDTO.getId());
+        return categoryConverter.toDTO(categoryRepository.save(categoryConverter.toEntity(categoryDTO,category)));
     }
 
     @Override
@@ -36,7 +69,7 @@ public class CategoryService implements ICategoryService {
         List<Product> products = categoryRepository.findOne(id).getProducts();
         List<ProductDTO> productDTOs = new ArrayList<>();
 
-        for (Product product:products) {
+        for (Product product : products) {
             productDTOs.add(productConverter.toDTO(product));
         }
         return productDTOs;

@@ -1,22 +1,18 @@
 package com.nnstore.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "Orders")
-public class Order {
-
+@Table(name = "Carts")
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "customerId")
+    @OneToOne
+    @JoinColumn(name = "userId")
     private User user;
 
     @Column(name = "Sale")
@@ -25,20 +21,8 @@ public class Order {
     @Column(name = "Amount")
     private Double amount;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd/mm/yyyy")
-    @Column(name = "CreateDate")
-    private Date createdDate;
-
-    @OneToMany(mappedBy = "order")
-    private List<OrderDetail> orderDetails = new ArrayList<>();
-
-    public Order() {
-    }
-
-    public Order(Long id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy = "cart")
+    List<CartDetail> products = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -72,19 +56,11 @@ public class Order {
         this.amount = amount;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public List<CartDetail> getProducts() {
+        return products;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public List<OrderDetail> getOrderDetails() {
-        return orderDetails;
-    }
-
-    public void setOrderDetails(List<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
+    public void setProducts(List<CartDetail> products) {
+        this.products = products;
     }
 }

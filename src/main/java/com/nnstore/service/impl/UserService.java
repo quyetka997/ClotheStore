@@ -40,6 +40,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public User findOne(Long id) {
+        return userRepository.findOne(id);
+    }
+
+    @Override
     public UserDTO findOneByUserNameAndPassWord(String username, String password) {
         //List<User> users = userRepository.findFirstByUserNameAndPassWord(username, password);
         User user = userRepository.findFirstByUserNameAndPassWord(username, password);
@@ -62,6 +67,12 @@ public class UserService implements IUserService {
 
     @Override
     public UserDTO save(UserDTO userDTO) {
+        User result = userConverter.toEntity(userDTO, new User());
+        return userConverter.toDTO(userRepository.save(result));
+    }
+
+    @Override
+    public UserDTO update(UserDTO userDTO) {
         User user = userRepository.findOne(userDTO.getId());
         User result = userConverter.toEntity(userDTO, user);
         return userConverter.toDTO(userRepository.save(result));

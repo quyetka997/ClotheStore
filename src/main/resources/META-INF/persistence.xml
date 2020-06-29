@@ -7,6 +7,8 @@
         <class>com.nnstore.entity.Category</class>
         <class>com.nnstore.entity.OrderDetail</class>
         <class>com.nnstore.entity.Role</class>
+        <class>com.nnstore.entity.Cart</class>
+        <class>com.nnstore.entity.CartDetail</class>
     </persistence-unit>
 </persistence>
 

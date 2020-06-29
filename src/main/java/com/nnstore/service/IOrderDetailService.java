@@ -1,14 +1,18 @@
 package com.nnstore.service;
 
+import com.nnstore.dto.OrderDetailDTO;
+import com.nnstore.dto.ProductDTO;
 import com.nnstore.entity.OrderDetail;
 
 import java.util.List;
 
 public interface IOrderDetailService {
 
-    List<OrderDetail> findAll();
+    List<ProductDTO> findAllByOrderId(Long id);
 
-    OrderDetail save(OrderDetail orderDetail);
+    OrderDetailDTO insert(OrderDetailDTO orderDetail);
 
-    void delelte(Long id);
+    OrderDetailDTO update(OrderDetailDTO orderDetail);
+
+    void delete(Long id);
 }

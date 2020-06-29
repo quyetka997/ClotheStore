@@ -1,6 +1,7 @@
 package com.nnstore.converter;
 
 import com.nnstore.dto.ProductDTO;
+import com.nnstore.entity.CartDetail;
 import com.nnstore.entity.Category;
 import com.nnstore.entity.Product;
 import com.nnstore.service.ICategoryService;
@@ -25,6 +26,7 @@ public class ProductConverter {
         productDTO.setThumnail(product.getThumnail());
         productDTO.setCategoryId(product.getCategory().getId());
         productDTO.setQuantity(product.getQuantity());
+        productDTO.setSale(product.getSale());
         return productDTO;
     }
 
@@ -34,11 +36,17 @@ public class ProductConverter {
         result.setName(productDTO.getName());
         result.setPrice(productDTO.getPrice());
         result.setThumnail(productDTO.getThumnail());
-        if(productDTO.getCategoryId() != result.getCategory().getId()) {
-            Category category = categoryService.findOne(productDTO.getCategoryId());
+        result.setQuantity(productDTO.getQuantity());
+        result.setSale(productDTO.getSale());
+        if(result.getCategory() == null
+                || productDTO.getCategoryId() != result.getCategory().getId()) {
+            //Category category = categoryService.findCategory(productDTO.getCategoryId());
+            Category category = new Category();
+            category.setId(productDTO.getCategoryId());
             result.setCategory(category);
         }
         return result;
     }
+
 
 }

@@ -56,6 +56,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "productId"))
     private List<Product> remindProducts = new ArrayList<>();
 
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
     public Long getId() {
         return id;
     }
@@ -142,5 +145,13 @@ public class User {
 
     public void setRemindProducts(List<Product> remindProducts) {
         this.remindProducts = remindProducts;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }

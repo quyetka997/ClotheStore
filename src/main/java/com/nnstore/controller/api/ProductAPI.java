@@ -15,26 +15,21 @@ public class ProductAPI {
     IProductService productService;
 
     @GetMapping("/product")
-    ResponseEntity<?> getAllProduct() {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.findAll());
-    }
-
-    @GetMapping("/product")
-    ResponseEntity<?> getAllProductFollowCategory(@RequestParam Long categoryId, @RequestParam(required = false) String name) {
+    ResponseEntity<?> getAllProductFollowCategory(@RequestParam(required = false) Long categoryId, @RequestParam(required = false) String name) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.findAllByCategoryIdAndNameLike(categoryId, name));
     }
 
-    @GetMapping("/product/{id}")
+    @RequestMapping("/product/{id}")
     ResponseEntity<?> getProductFollowCategory(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.findOneById(id));
     }
 
     @PostMapping("/product")
     ResponseEntity<?> saveProduct(@RequestBody ProductDTO productDTO) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.save(productDTO));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.insert(productDTO));
     }
 
-    @GetMapping(value = {"/product/search"})
+    @RequestMapping(value = {"/product/search"})
     public ResponseEntity<?> search(@RequestParam(name = "keyword", required = false,defaultValue = "") String name){
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.findAllByNameLike(name));
     }

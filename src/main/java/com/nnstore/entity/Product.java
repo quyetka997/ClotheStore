@@ -54,6 +54,16 @@ public class Product {
     @ManyToMany(mappedBy = "remindProducts")
     private List<User> remindUsers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "product")
+    private List<CartDetail> cartDetails = new ArrayList<>();
+
+    public Product() {
+    }
+
+    public Product(Long id) {
+        this.id = id;;
+    }
+
     public Long getId() {
         return id;
     }

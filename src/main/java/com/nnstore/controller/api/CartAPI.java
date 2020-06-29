@@ -11,39 +11,38 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class CartAPI {
 
-    @Autowired
-    CartSession cartSession;
 
-    @Autowired
-    IProductService productService;
 
-    @GetMapping(name = "/cart")
-    ResponseEntity<?> getCart(){
-        return  ResponseEntity.status(HttpStatus.ACCEPTED).body(cartSession.getProducts());
-    }
-
-    @PostMapping(name = "/cart/{id}")
-    ResponseEntity<?> addProductIntoCart(@PathVariable Long id){
-        cartSession.add(id);
-        return  ResponseEntity.status(HttpStatus.ACCEPTED).body(cartSession.getProducts());
-    }
-
-    @PutMapping(name = "/cart")
-    ResponseEntity<?> updateCartProduct(@RequestParam Long id, @RequestParam Integer quantity){
-        cartSession.update(id, quantity);
-        return  ResponseEntity.status(HttpStatus.ACCEPTED).body(cartSession.getProducts());
-    }
-
-    @DeleteMapping(name = "/cart")
-    ResponseEntity<?> deleteCart(@RequestParam Long id, @RequestParam Integer quantity){
-        cartSession.clear();
-        return  ResponseEntity.status(HttpStatus.ACCEPTED).body(cartSession.getProducts());
-    }
-
-    @DeleteMapping(name = "/cart/{id}")
-    ResponseEntity<?> deleteProductCart(@PathVariable Long id){
-        cartSession.remove(id);
-        return  ResponseEntity.status(HttpStatus.ACCEPTED).body(cartSession.getProducts());
-    }
+//    @Autowired
+//    IProductService productService;
+//
+//    @GetMapping("/cart")
+//    ResponseEntity<?> getCart(){
+//        return  ResponseEntity.status(HttpStatus.ACCEPTED).body(cartSession.getProducts());
+//    }
+//
+//    @PostMapping("/cart/{id}")
+//    ResponseEntity<?> addProductIntoCart(@PathVariable Long id){
+//        cartSession.add(id);
+//        return  ResponseEntity.status(HttpStatus.ACCEPTED).body(cartSession.getProducts());
+//    }
+//
+//    @PutMapping("/cart")
+//    ResponseEntity<?> updateCartProduct(@RequestParam Long id, @RequestParam Integer quantity){
+//        cartSession.update(id, quantity);
+//        return  ResponseEntity.status(HttpStatus.ACCEPTED).body(cartSession.getProducts());
+//    }
+//
+//    @DeleteMapping("/cart/delete")
+//    ResponseEntity<?> deleteCart(@RequestParam Long id, @RequestParam Integer quantity){
+//        cartSession.clear();
+//        return  ResponseEntity.status(HttpStatus.ACCEPTED).body(cartSession.getProducts());
+//    }
+//
+//    @DeleteMapping("/cart/{id}")
+//    ResponseEntity<?> deleteProductCart(@PathVariable Long id){
+//        cartSession.remove(id);
+//        return  ResponseEntity.status(HttpStatus.ACCEPTED).body(cartSession.getProducts());
+//    }
 
 }

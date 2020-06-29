@@ -1,8 +1,13 @@
 package com.nnstore.service.impl;
 
+import com.nnstore.converter.OrderDetailConverter;
+import com.nnstore.dto.OrderDetailDTO;
+import com.nnstore.dto.ProductDTO;
 import com.nnstore.entity.OrderDetail;
+import com.nnstore.entity.User;
 import com.nnstore.repository.OrderDetailRepository;
 import com.nnstore.service.IOrderDetailService;
+import com.nnstore.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,22 +18,40 @@ import java.util.List;
 public class OrderDetailService implements IOrderDetailService {
 
     @Autowired
-    EntityManager em;
+    OrderDetailRepository orderDetailRepository;
 
     @Autowired
-    OrderDetailRepository orderDetailRepository;
+    UserService userService;
+
+    @Autowired
+    OrderDetailConverter orderDetailConverter;
+
+    @Autowired
+    IOrderService orderService;
+
     @Override
-    public List<OrderDetail> findAll() {
-        return orderDetailRepository.findAll();
+    public List<ProductDTO> findAllByOrderId(Long id) {
+        return orderService.findAllProductByOrderId(id);
     }
 
     @Override
-    public OrderDetail save(OrderDetail orderDetail) {
-        return orderDetailRepository.save(orderDetail);
+    public OrderDetailDTO insert(OrderDetailDTO orderDetailDTO) {
+        orderDetailRepository.save(orderDetailConverter.toEntity(orderDetailDTO, new OrderDetail()));
+        return orderDetailDTO;
     }
 
     @Override
-    public void delelte(Long id) {
+    public OrderDetailDTO update(OrderDetailDTO orderDetailDTO) {
+        OrderDetail orderDetail = orderDetailRepository.findOne(orderDetailDTO.getId());
+        if(orderDetail == null) {
+            return null;
+        }
+        orderDetailRepository.save(orderDetailConverter.toEntity(orderDetailDTO,orderDetail));
+        return orderDetailDTO;
+    }
+
+    @Override
+    public void delete(Long id) {
         orderDetailRepository.delete(id);
     }
 }
