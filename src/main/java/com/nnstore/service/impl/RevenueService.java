@@ -40,7 +40,7 @@ public class RevenueService implements IRevenue {
         List<Object[]> results= query.getResultList();
         List<RevenueDTO> revenueDTOs = new ArrayList<>();
         for (Object[] record: results) {
-            revenueDTOs.add(new RevenueDTO((Integer) record[0], (Double) record[1]));
+            //revenueDTOs.add(new RevenueDTO((Integer) record[0], (Double) record[1]));
         }
         return revenueDTOs;
     }

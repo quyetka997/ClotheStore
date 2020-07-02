@@ -23,12 +23,43 @@ public class UserAPI {
     @Autowired
     UserSession userSession;
 
-    @GetMapping("/user")
+    @PostMapping("/login")
+    ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
+        UserDTO user = userService.findOneByUserNameAndPassWord(userDTO.getUserName(), userDTO.getPassWord());
+        if(user == null) {
+            throw new NotFoundException("Username not exists ");
+        }
+        userSession.addUser(user);
+        return  ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
+    }
+
+    @PostMapping("/register")
+    ResponseEntity<?> register(@RequestBody UserDTO userDTO) {
+        if(userService.findOneByUserNameAndPassWord(userDTO.getUserName(), userDTO.getPassWord()) != null) {
+            throw new DuplicateRecordException("Username already exists ");
+        }
+        UserDTO user = userService.save(userDTO);
+        userSession.addUser(user);
+        return  ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
+    }
+
+    @GetMapping("/logout")
+    ResponseEntity<?> logout(@RequestBody UserDTO userDTO) {
+        if(userService.findOneByUserNameAndPassWord(userDTO.getUserName(), userDTO.getPassWord()) == null) {
+            throw new NotFoundException("Username not exists ");
+        }
+        if(userSession.isValid()) {
+            userSession.removeUser();
+        }
+        return  ResponseEntity.ok("true");
+    }
+
+    @GetMapping("/user/all")
     ResponseEntity<?> getUsers() {
         return  ResponseEntity.ok(userService.findAll());
     }
 
-    @RequestMapping("/user/{id}")
+    @GetMapping("/user/{id}")
     ResponseEntity<?> getUser(@PathVariable Long id) {
         UserDTO userDTO = userService.findOneById(id);
         if(userDTO != null) {
@@ -37,13 +68,21 @@ public class UserAPI {
         return  ResponseEntity.ok(userDTO);
     }
 
-    @PostMapping("/user")
+    @PostMapping("/adduser")
     ResponseEntity<?> save(@RequestBody UserDTO userDTO) {
         if(userService.findOneByUserNameAndPassWord(userDTO.getUserName(), userDTO.getPassWord()) != null) {
             throw new DuplicateRecordException("Username already exists ");
         }
         UserDTO user = userService.save(userDTO);
-        userSession.addUser(user);
+        return  ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
+    }
+
+    @PostMapping("/user")
+    ResponseEntity<?> getUser(@RequestBody UserDTO userDTO) {
+        UserDTO user = userService.findOneByUserNameAndPassWord(userDTO.getUserName(), userDTO.getPassWord());
+        if(user == null) {
+            throw new DuplicateRecordException("Username not exists ");
+        }
         return  ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
     }
 

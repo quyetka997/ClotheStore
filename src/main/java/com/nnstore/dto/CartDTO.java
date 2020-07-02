@@ -1,12 +1,16 @@
 package com.nnstore.dto;
 
-public class CartDetailDTO {
+import com.nnstore.entity.User;
+
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+public class CartDTO {
 
     private Long id;
 
-    private Long productId;
-
-    private Long cartId;
+    private Integer sale;
 
     private Integer quantity;
 
@@ -20,20 +24,12 @@ public class CartDetailDTO {
         this.id = id;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Integer getSale() {
+        return sale;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public Long getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(Long cartId) {
-        this.cartId = cartId;
+    public void setSale(Integer sale) {
+        this.sale = sale;
     }
 
     public Integer getQuantity() {

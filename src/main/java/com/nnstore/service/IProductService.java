@@ -31,4 +31,16 @@ public interface IProductService {
     Long getRemindCount(Long id);
 
     Long getCount();
+
+    List<ProductDTO> getFavoriteProducts(Long id);
+
+    List<ProductDTO> getViewProducts(Long id);
+
+    List<ProductDTO> getRemindProducts(Long id);
+
+    boolean addRemindProductToUser(long productId,long userId);
+
+    boolean addFavoriteProductToUser(long productId,long userId);
+
+    boolean addViewedProductToUser(long productId,long userId);
 }

@@ -42,6 +42,7 @@ public class OrderDetailService implements IOrderDetailService {
 
     @Override
     public OrderDetailDTO update(OrderDetailDTO orderDetailDTO) {
+        //Check product exist to add qua
         OrderDetail orderDetail = orderDetailRepository.findOne(orderDetailDTO.getId());
         if(orderDetail == null) {
             return null;

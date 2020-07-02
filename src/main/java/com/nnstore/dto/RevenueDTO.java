@@ -6,14 +6,6 @@ public class RevenueDTO {
 
     private Double amount;
 
-    public RevenueDTO() {
-    }
-
-    public RevenueDTO(Integer month, Double amount) {
-        this.month = month;
-        this.amount = amount;
-    }
-
     public Integer getMonth() {
         return month;
     }

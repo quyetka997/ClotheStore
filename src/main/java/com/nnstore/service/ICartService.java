@@ -1,20 +1,26 @@
 package com.nnstore.service;
 
+import com.nnstore.dto.CartDTO;
 import com.nnstore.dto.CartDetailDTO;
 import com.nnstore.dto.ProductDTO;
 import com.nnstore.entity.Cart;
+import com.nnstore.entity.CartDetail;
 import com.nnstore.entity.Product;
 
 import java.util.List;
 
 public interface ICartService {
 
-    List<CartDetailDTO> getProducts(Long id);
+    CartDTO getCart(Long idCart);
 
-    List<CartDetailDTO> insertProduct(CartDetailDTO cartDetailDTO, Long id);
+    List<ProductDTO> getProducts(Long idCart);
 
-    List<CartDetailDTO> updateProduct(CartDetailDTO cartDetailDTO, Long id);
+    ProductDTO insertProductToCart(ProductDTO productDTO, Long idCart);
 
-    void delete(Long id);
+    ProductDTO updateProduct(ProductDTO productDTO, Long idCart);
+
+    void deleteProduct(Long idProduct, Long idCart);
+
+    void deleteCart(Long id);
 
 }

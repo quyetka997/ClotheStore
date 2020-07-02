@@ -72,6 +72,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
     public UserDTO update(UserDTO userDTO) {
         User user = userRepository.findOne(userDTO.getId());
         User result = userConverter.toEntity(userDTO, user);

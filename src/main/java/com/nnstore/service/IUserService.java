@@ -1,5 +1,6 @@
 package com.nnstore.service;
 
+import com.nnstore.dto.ProductDTO;
 import com.nnstore.dto.UserDTO;
 import com.nnstore.entity.User;
 
@@ -19,7 +20,10 @@ public interface IUserService {
 
     UserDTO save(UserDTO user);
 
+    User save(User user);
+
     UserDTO update(UserDTO user);
 
     void delete(Long id);
+
 }

@@ -18,18 +18,6 @@ public class UserDTO {
 
     private String phoneNumber;
 
-    public UserDTO() {
-    }
-
-    public UserDTO(Long id, String userName, String passWord, String fullName, String email, String phoneNumber) {
-        this.id = id;
-        this.userName = userName;
-        this.passWord = passWord;
-        this.fullName = fullName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
-
     public Long getId() {
         return id;
     }

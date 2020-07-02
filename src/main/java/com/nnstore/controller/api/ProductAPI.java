@@ -1,8 +1,10 @@
 package com.nnstore.controller.api;
 
 import com.nnstore.dto.ProductDTO;
+import com.nnstore.exception.NotFoundException;
 import com.nnstore.service.ICategoryService;
 import com.nnstore.service.IProductService;
+import com.nnstore.session.UserSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,8 @@ public class ProductAPI {
     @Autowired
     IProductService productService;
 
+    @Autowired
+    UserSession userSession;
     @GetMapping("/product")
     ResponseEntity<?> getAllProductFollowCategory(@RequestParam(required = false) Long categoryId, @RequestParam(required = false) String name) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.findAllByCategoryIdAndNameLike(categoryId, name));
@@ -34,31 +38,54 @@ public class ProductAPI {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.findAllByNameLike(name));
     }
 
-//    @GetMapping("/product/view/{id}")
-//    ResponseEntity<?> getViewProduct(@PathVariable Long id) {
-//
-//    }
-//
-//    @GetMapping("/product/view/{id}")
-//    ResponseEntity<?> getRemindProduct() {
-//
-//    }
-//
-//    @GetMapping("/product/addview/{id}")
-//    ResponseEntity<?> getFavoriteProduct(@PathVariable Long customerID) {
-//
-//    }
-//
-//    ResponseEntity<?> addViewProduct() {
-//
-//    }
-//
-//    ResponseEntity<?> addRemindProduct() {
-//
-//    }
-//
-//    ResponseEntity<?> addFavoriteProduct() {
-//
-//    }
+    @GetMapping("/product/view")
+    ResponseEntity<?> getViewedProduct() {
+        if(userSession.isValid()) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.getViewProducts(userSession.getUser().getId()));
+        }
+        //TODO: check again
+        return ResponseEntity.ok("User not login");
+    }
+
+    @PostMapping("/product/view/{id}")
+    ResponseEntity<?> addViewedProduct(@PathVariable Long id) {
+        if(userSession.isValid()) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.addViewedProductToUser(id, userSession.getUser().getId()));
+        }
+        return ResponseEntity.ok("User not login");
+    }
+
+    @GetMapping("/product/favorite")
+    ResponseEntity<?> getFavoriteProduct() {
+        if(userSession.isValid()) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.getFavoriteCount(userSession.getUser().getId()));
+        }
+        return ResponseEntity.ok("User not login");
+    }
+
+    @PostMapping("/product/favorite/{id}")
+    ResponseEntity<?> addFavoriteProduct(@PathVariable Long id) {
+        if(userSession.isValid()) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.addFavoriteProductToUser(id, userSession.getUser().getId()));
+        }
+        return ResponseEntity.ok("User not login");
+    }
+
+    @GetMapping("/product/remind")
+    ResponseEntity<?> getRemindedProduct() {
+        if(userSession.isValid()) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.getRemindProducts(userSession.getUser().getId()));
+        }
+        return ResponseEntity.ok("User not login");
+    }
+
+    @PostMapping("/product/remind/{id}")
+    ResponseEntity<?> addRemindedProduct(@PathVariable Long id) {
+        if(userSession.isValid()) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.addRemindProductToUser(id, userSession.getUser().getId()));
+        }
+        return ResponseEntity.ok("User not login");
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.nnstore.converter;
 
 import com.nnstore.dto.ProductDTO;
+import com.nnstore.entity.Cart;
 import com.nnstore.entity.CartDetail;
 import com.nnstore.entity.Category;
 import com.nnstore.entity.Product;
@@ -45,6 +46,16 @@ public class ProductConverter {
             category.setId(productDTO.getCategoryId());
             result.setCategory(category);
         }
+        return result;
+    }
+
+    public CartDetail toCartDetailEntity(ProductDTO productDTO, Cart cart) {
+        CartDetail result = new CartDetail();
+        result.setQuantity(productDTO.getQuantity());
+        result.setCart(cart);
+        Product product = new Product();
+        product.setId(productDTO.getId());
+        result.setProduct(product);
         return result;
     }
 

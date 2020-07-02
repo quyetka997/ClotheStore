@@ -12,6 +12,10 @@ public class UserSession {
 
     public UserDTO user;
 
+    public UserDTO getUser(){
+        return user;
+    }
+
     public void addUser(UserDTO userDTO){
         user = userDTO;
     }

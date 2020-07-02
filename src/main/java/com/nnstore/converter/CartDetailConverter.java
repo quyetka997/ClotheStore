@@ -18,13 +18,10 @@ public class CartDetailConverter {
     }
 
     CartDetail toEntity(CartDetailDTO cartDetailDTO, CartDetail result) {
-        result.setAmount(cartDetailDTO.getAmount());
-
         Cart cart = new Cart();
-        cart.setId(cartDetailDTO.getId());
+        cart.setId(cartDetailDTO.getCartId());
         result.setCart(cart);
         result.setId(cartDetailDTO.getId());
-
         Product product = new Product();
         product.setId(cartDetailDTO.getId());
         result.setProduct(product);
